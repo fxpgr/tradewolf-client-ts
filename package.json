@@ -1,0 +1,29 @@
+{
+  "name": "tradewolf-client-typescript",
+  "version": "0.8.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@types/node": "^12.12.31",
+    "axios": "^0.19.2",
+    "crypto-ts": "^1.0.2",
+    "querystring": "^0.2.0",
+    "url": "^0.11.0",
+    "utf8-encoding": "^0.1.2"
+  },
+  "devDependencies": {
+    "ts-node": "^8.8.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.8.3"
+  }
+}
