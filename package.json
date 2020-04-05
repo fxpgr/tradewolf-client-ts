@@ -1,13 +1,11 @@
 {
-  "name": "@fxpgr/tradewolf-client-ts",
-  "version": "0.8.0",
+  "name": "tradewolf-client-ts",
+  "version": "0.8.1",
   "main": "dist/index.js",
   "license": "MIT",
-  "author": "fxpgr",
+  "author": "airking05",
+  "private": false,
   "repository": "https://github.com/fxpgr/tradewolf-client-ts.git",
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
-  },
   "files": [
     "dist"
   ],
