@@ -14,7 +14,7 @@ import { DefaultApi } from "./api";
 import { BASE_PATH } from "./base";
 import { stringify } from "querystring";
 import * as crypto from "crypto";
-
+import * as createHmac from "create-hmac"
 
 export * from "./api";
 export * from "./configuration";
@@ -42,8 +42,9 @@ class TradewolfApi {
         let message = nonce + path + method
         if(method == "POST"){
             message += queryString
-        }   
-        const hmac = crypto.createHmac("sha256",this.utf8_encoder.encode(this.secretKey))
+        }
+        
+        const hmac = createHmac("sha256",Buffer.from(this.secretKey))
         const signature = hmac.update(this.utf8_encoder.encode(message)).digest('hex')
         
         const headers = {
