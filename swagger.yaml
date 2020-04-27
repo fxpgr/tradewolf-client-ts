@@ -1,0 +1,185 @@
+swagger: "2.0"
+info:
+  version: "0.8.0"
+  title: "Tradewolf API"
+  description: "A definition for Tradewolf API"
+host: "api.tradewolf.io"
+basePath: "/v1"
+schemes:
+  - "https"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /arbitrage-pairs:
+    get:
+      # summary: Returns a list of arbitrage pairs on all exchanges.
+      description: This endpoint retrieves all Tradewolf supported currency pairs for arbitrage. The fields "exchange_a" and "exchange_b" is unorderd.
+      operationId: getArbitragePairs
+      parameters:
+        - name: X-API-KEY
+          in: header
+          type: string
+          format: uuid
+          required: true
+        - name: X-API-SIGNATURE
+          in: header
+          type: string
+          required: true
+        - name: X-API-TIMESTAMP
+          in: header
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/ArbitragePairs'
+          headers:
+            X-Rate-Limit-Remaining:
+              type: integer
+            X-Rate-Limit-Reset:
+              type: string
+              format: date-time
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /orderbooks:
+    get:
+      # summary: Returns a list of all orderbooks by exchange.
+      description: This endpoint retrieves all Tradewolf supported orderbooks.
+      operationId: getOrderBookByExchange
+      parameters:
+        - name: exchange
+          in: query
+          required: true
+          type: string
+        - name: X-API-KEY
+          in: header
+          type: string
+          format: uuid
+          required: true
+        - name: X-API-SIGNATURE
+          in: header
+          type: string
+          required: true
+        - name: X-API-TIMESTAMP
+          in: header
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/OrderBooks'
+          headers:
+            X-Rate-Limit-Remaining:
+              type: integer
+            X-Rate-Limit-Reset:
+              type: string
+              format: date-time
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /withdrawal-fees:
+    get:
+      operationId: getWithdrawalFeesByExchange
+      parameters:
+        - name: exchange
+          in: query
+          required: true
+          type: "string"
+        - name: X-API-KEY
+          in: header
+          type: string
+          format: uuid
+          required: true
+        - name: X-API-SIGNATURE
+          in: header
+          type: string
+          required: true
+        - name: X-API-TIMESTAMP
+          in: header
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/WithdrawalFees'
+          headers:
+            X-Rate-Limit-Remaining:
+              type: integer
+            X-Rate-Limit-Reset:
+              type: string
+              format: date-time
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Error:
+    type: object
+    required:
+      - message
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+  ArbitragePairs:
+    type: array
+    items:
+      $ref: '#/definitions/ArbitragePair'
+  ArbitragePair:
+    type: object
+    properties:
+      exchange_a:
+        type: string
+      exchange_b:
+        type: string
+      trading:
+        type: string
+      settlement:
+        type: string
+  OrderBooks:
+    type: array
+    items:
+      $ref: '#/definitions/OrderBook'
+  OrderBook:
+    type: object
+    properties:
+      trading:
+        type: string
+      settlement:
+        type: string
+      bids:
+        type: array
+        items:
+          $ref: '#/definitions/BoardBar'
+      asks:
+        type: array
+        items:
+          $ref: '#/definitions/BoardBar'
+  BoardBar:
+    type: object
+    properties:
+      amount:
+        type: number
+      price:
+        type: number
+  WithdrawalFees:
+    type: array
+    items:
+      $ref: '#/definitions/WithdrawalFee'
+  WithdrawalFee:
+    type: object
+    properties:
+      currency:
+        type: string
+      amount:
+        type: number

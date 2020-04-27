@@ -30,13 +30,13 @@ export interface ArbitragePair {
      * @type {string}
      * @memberof ArbitragePair
      */
-    exchangeA?: string;
+    exchange_a?: string;
     /**
      * 
      * @type {string}
      * @memberof ArbitragePair
      */
-    exchangeB?: string;
+    exchange_b?: string;
     /**
      * 
      * @type {string}
